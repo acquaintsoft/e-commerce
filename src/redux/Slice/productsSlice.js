@@ -1,8 +1,11 @@
-//import axios from "axios";
 import axios from "../../auth/interceptor";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
-//import { current } from "immer";
+import {
+  BASE_URL,
+  getAllCategoriesApi,
+  getProductApi,
+} from "../../common/constants";
 
 const initialState = {
   categories: "",
@@ -15,10 +18,7 @@ export const getAllCategories = createAsyncThunk(
   "users/getAllCategories",
   async () => {
     try {
-      const response = await axios.get(
-        "https://fakestoreapi.com/products/categories"
-      );
-      console.log(response.data);
+      const response = await axios.get(`${BASE_URL}/${getAllCategoriesApi}`);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -31,10 +31,10 @@ export const getProducts = createAsyncThunk(
   "users/getProducts",
   async (category) => {
     try {
-      console.log("category", category);
+      //console.log("category", category);
       let url;
       const response = await axios.get(
-        `https://fakestoreapi.com/products/category/${category.category}?limit=${category.limit}&sort=${category.sort}`
+        `${BASE_URL}/${getProductApi}/${category.category}?limit=${category.limit}&sort=${category.sort}`
       );
       //console.log(response.data);
       return response.data;
@@ -106,7 +106,6 @@ export const productSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { addToCart } = productSlice.actions;
 
 export default productSlice.reducer;

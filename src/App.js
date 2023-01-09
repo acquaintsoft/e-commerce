@@ -4,8 +4,9 @@ import Login from "./components/login";
 import AllCategory from "./components/getAllCategory";
 import Category from "./components/category";
 import NotFound from "./components/NotFound";
-import PrivatRoute from "./auth/authCheck";
+//import PrivatRoute from "./auth/authCheck";
 import Cart from "./components/cart";
+import PrivateRoute from "./auth/privateRoute";
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-        <Route
+
+        {/* first way of Auth */}
+        {/* <Route
           path="getAllCategory"
           element={
             <PrivatRoute>
@@ -36,7 +39,15 @@ function App() {
               <Cart />
             </PrivatRoute>
           }
-        />
+        /> */}
+
+        {/* different way of Auth */}
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="getAllCategory" element={<AllCategory />} />
+          <Route path="getAllCategory/:category" element={<Category />} />
+          <Route path="cart" element={<Cart />} />
+        </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
